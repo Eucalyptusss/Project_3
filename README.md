@@ -64,6 +64,11 @@ From the final model I derived that tthe most important features are:
 - When the waterpoint source is unknown there are more dysfuncttional water pumps.
 - Where the extraction method is unkown there are more dysfunctional water pumps
 
+# Author
+Please reach out to me at:
+https://www.linkedin.com/in/vincent-404/
+or email me at:
+jvincentwelsh99@hotmail.com
 
 
 
