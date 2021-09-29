@@ -29,42 +29,79 @@ The data had 6 column with NaN values. The values were all small enough and cate
 ### DataTypes
 There were 5 columns that were object but needed to be integers.
 ## Modeling
-I cross validated various models using the train data. I used accuracy to determine the model of best fit.
-- Logistic Regression: .703
-- KNN Classifier: .726
-- Gaussian Naive Bayes: .28
-- Bernoullie Naive Bayes: .63
-- Support Vector Machine: .736
-- Random Forest: .743
-- XGBOOST Classifer: .743
+I cross validated various models using the train data. I looked at accuracy, precision, and recall. I focused on precision of non functional pump prediction because that is the most relvant metric to meet the business problem. 
+- Logistic Regression:
+  - Baseline Accuracy: .7677531647222683
+  - Baseline (Non Functional) Precision: .799
+  - Baseline (Non Functional) Recall: 0.657
+  - Baseline (Non Functional) F1: .721
+- KNN Classifier: Worse on all metrics
+- Gaussian Naive Bayes: Worse on all metrics
+- Bernoullie Naive Bayes: Worse on all metrics
+- Support Vector Machine: 
+  - SVM Accuracy: .7920831807342286
+  - SVM (Non Functional) Precision: .799
+  - SVM (Non Functional) Recall: .838
+  - SVM (Non Functional) F1: .748 
+- Random Forest:
+  - RF Accuracy: .8046863531014881
+  - RF (Non Functional) Precision: .815
+  - RF (Non Functional) Recall: .745
+  - RF (Non Functional) F1: .779
+- XGBOOST Classifer: 
+  XG Accuracy: .8032036664262344
+  XG (Non Functional) Precision: .828
+  XG (Non Functional) Recall: .705
+  XG (Non Functional) F1: .705
 ## Optimization
-I then optimized the Random Forest & XGBOOST Classifer because of their higher scores. Using gridsearch CV over several iterations I determined the optimized
-paramerter were max_depth=6, n_estimators = 100, learning_rate=.75. Then I compared our vanilla model to the optimized model using accuracy.
-Vanilla XG : .743918725731018
-Optimized XG : .7469791558316403
+I then optimized the Random Forest & XGBOOST Classifer because of their higher scores. Using gridsearch CV over several iterations (scoring=precision_macro) For the Gradient Boosed model I determined the optimized parameters are learning_rate =.1, max_depth = 15, n_estimators = 100
+- Vanilla XG Accuracy: .8032036664262344
+- Vanilla XG (Non Functional) Precision: .828
+- Vanilla XG (Non Functional) Recall: .705
+- Vanilla XG (Non Functional) F1: .705
 
-For Random Forest I found, max_features='sqrt', min_samples_leaf=2, min_samples_split=2, n_estimators=820, max_depth = 60.
-Vanilla RF: .7439862223535283
-Optimized RF: .7522222358389772
+
+- Optimized XG Accuracy: .8121898028107071
+- Optimized XG (Non Functional) Precision: .853
+- Optimized XG (Non Functional) Recall: .724
+- Optimized XG (Non Functional) F1: .779
+
+For Random Forest I found, max_depth = 16, max_features = sqrt, min_samples_leaf = 2, min_samples_split = 2, n_estimators = 100
+- Vanilla RF Accuracy: .8046863531014881
+- Vanilla RF (Non Functional) Precision: .815
+- Vanilla RF (Non Functional) Recall: .745
+- Vanilla RF (Non Functional) F1: .779
+
+- Optimized RF Accuracy: .7949588203855564
+- Optimized RF (Non Functional) Precision: .864
+- Optimized (Non Functional) Recall: .646
+- Optimized RF (Non Functional) F1: .739
 
 ## Feature Selection
 Finally, I construct a pipeline of my process using the optimized Random Forest model. Then I test various combinations of features against what I buil the model on.
 ## Final Model
-After determing the best featrues to include my final model received a .7594167679222357 accuracy score on an unseen validation set.
+- Final Model Accuracy: .812
+- Final Model (Non Functional) Precision: .843
+- Final Model (Non Functional) Recall: .724
+- Final Model (Non Functional) F1: .779
 
 # Analysis
 From the final model I derived that tthe most important features are:
-  1. GPS Height
+  1. Quantity
   2. Water Point Type
-  3. Extraction Type
-  4. Population
-  5. Amount of water available to waterpoint
+  3. Region
+  4. LGA
+  5. Extraction Type
 # Conclusions
-- Water points in lower altitude regions have more dysfunctional water pumps
-- When the waterpoint source is unknown there are more dysfuncttional water pumps.
-- Where the extraction method is unkown there are more dysfunctional water pumps
+-All future water pumps build need a watersource that will not run out.
+    -The following rural wards need aid in developing and recording waterpoint sources as they are top contributors to non functional water pumps.
+        - Marangu Mashariki
+        - Namajani
+        - Pangani Mashariki
+    -All future water pumps need to be built below 668m altitude when possible.
 
 # Author
+
 Please reach out to me at:
 https://www.linkedin.com/in/vincent-404/
 or email me at:
